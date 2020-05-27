@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+
+        <input id="form" type="text">
+        <button type="button" onclick="dodajZadanie()">Dodaj do listy</button>
+    </div>
+
+
+    <ul id="lista"></ul>
+
+    <script>
+        let listaZadan = [];
+
+
+        //console.log(JSON.parse(listaZadan));
+
+        function printerujNaBeginie() {
+            if (listaZadan) {
+                listaZadan = localStorage.getItem("todos");
+                listaZadan = JSON.parse(listaZadan);
+                let drukejbleElements;
+                for (let i = 0; i < listaZadan.length; i++) {
+                    drukejbleElements +=
+                        `<li>${(listaZadan[i])} <button type="button" onclick="deleteTask(${i})">Zrobione</button></li>`;
+
+
+
+                }
+                document.getElementById("lista").innerHTML = drukejbleElements;
+            }
+        }
+        printerujNaBeginie()
+
+
+
+
+
+        function printHTML() {
+            let elements;
+            elements = '';
+
+
+            for (let i = 0; i < listaZadan.length; i++) {
+                elements +=
+                    `<li>${listaZadan[i]} <button type="button" onclick="deleteTask(${i})">Zrobione</button></li>`;
+
+            }
+
+            document.getElementById("lista").innerHTML = elements;
+
+            localStorage.setItem("todos", JSON.stringify(listaZadan));
+
+        }
+
+
+
+        function dodajZadanie() {
+
+            let kolejneZadanie;
+            kolejneZadanie = document.getElementById("form").value;
+
+            if (kolejneZadanie.trim()) {
+                document.getElementById("form").value = '';
+                listaZadan.push(kolejneZadanie);
+
+                printHTML()
+
+
+
+            } else {
+                alert("Wprowadź wartość!");
+            }
+
+        }
+
+
+        function deleteTask(index) {
+            listaZadan.splice(index, 1);
+            printHTML()
+
+        }
+    </script>
+
+
+
+</body>
+
+</html>
